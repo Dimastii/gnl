@@ -81,15 +81,16 @@ int				ft_reed(char **stat, char **line, int fd, char *bf)
 
 int				get_next_line(int fd, char **line)
 {
-	char		*bf;
-	static char	*stat[1024];
+	char			*bf;
+	static char		*stat[1024];
 
+	bf = NULL;
 	if (fd < 0 || !line || BUFFER_SIZE < 1
-	|| (read(fd, bf, 0)) < 0)
-		return (-1);
-	if (!(bf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char))))
+		|| !(bf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char)))
+		|| (read(fd, 0, 0)) < 0)
 	{
-		free(bf);
+		if (bf)
+			free(bf);
 		return (-1);
 	}
 	*line = NULL;
